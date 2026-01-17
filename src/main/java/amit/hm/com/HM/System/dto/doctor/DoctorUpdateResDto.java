@@ -1,22 +1,22 @@
-package amit.hm.com.HM.System.dto.patient;
+package amit.hm.com.HM.System.dto.doctor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-public class PatientResponseDto {
+public class DoctorUpdateResDto {
     private Long id;
     private String fullName;
-    private String email;
-    private Integer age;
-    private String gender;
-    private String bloodGroup;
+    private String specialization;
+    private Integer experience;
+    private Boolean available;
+    private String imageUrl;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
