@@ -73,7 +73,7 @@ public class DoctorController {
         );
         ApiResponseDto<AppointmentCreateResDto> response = new ApiResponseDto<>(
                 true,
-                "Status updated Successfull",
+                "Status updated Successfully",
                 1,
                 appointmentCreateResDto,
                 LocalDateTime.now()
