@@ -3,14 +3,18 @@ package amit.hm.com.HM.System.service;
 import amit.hm.com.HM.System.dto.admin.CreateDocReqDto;
 import amit.hm.com.HM.System.dto.admin.CreateDocResDto;
 import amit.hm.com.HM.System.dto.doctor.DoctorOwnProfileResDto;
+import amit.hm.com.HM.System.dto.patient.AppointmentCreateResDto;
 import amit.hm.com.HM.System.dto.patient.PatientResponseDto;
+import amit.hm.com.HM.System.entity.Appointment;
 import amit.hm.com.HM.System.entity.Doctor;
 import amit.hm.com.HM.System.entity.Patient;
 import amit.hm.com.HM.System.entity.User;
 import amit.hm.com.HM.System.entity.enums.Role;
 import amit.hm.com.HM.System.mapper.AdminDoctorMapper;
+import amit.hm.com.HM.System.mapper.AppointmentMapper;
 import amit.hm.com.HM.System.mapper.DoctorMapper;
 import amit.hm.com.HM.System.mapper.PatientMapper;
+import amit.hm.com.HM.System.repository.AppointmentRepository;
 import amit.hm.com.HM.System.repository.DoctorRepository;
 import amit.hm.com.HM.System.repository.PatientRepository;
 import amit.hm.com.HM.System.repository.UserRepository;
@@ -33,6 +37,7 @@ public class AdminService {
     private final AdminDoctorMapper mapper;
     private final DoctorMapper doctorMapper;
     private final PatientMapper patientMapper;
+    private final AppointmentRepository appointmentRepository;
     // create doctor
     public CreateDocResDto createDoctor(CreateDocReqDto dto) {
         // 1. email already exist check
@@ -90,6 +95,13 @@ public class AdminService {
         // 4. User delete
         userRepository.delete(user);
     }
+    // Get All Appointments (Admin)
+    public List<AppointmentCreateResDto> getAllAppointments() {
 
+        return appointmentRepository.findAll()
+                .stream()
+                .map(AppointmentMapper::toResponse)
+                .toList();
+    }
 
 }

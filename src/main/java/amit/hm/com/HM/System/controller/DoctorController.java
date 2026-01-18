@@ -1,15 +1,18 @@
 package amit.hm.com.HM.System.controller;
 
 import amit.hm.com.HM.System.dto.common.ApiResponseDto;
+import amit.hm.com.HM.System.dto.doctor.AppointmentStatusUpdateReqDto;
 import amit.hm.com.HM.System.dto.doctor.DoctorOwnProfileResDto;
 import amit.hm.com.HM.System.dto.doctor.DoctorUpdateReqDto;
 import amit.hm.com.HM.System.dto.doctor.DoctorUpdateResDto;
+import amit.hm.com.HM.System.dto.patient.AppointmentCreateResDto;
 import amit.hm.com.HM.System.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/doctor")
@@ -44,5 +47,37 @@ public class DoctorController {
         );
         return ResponseEntity.ok(response);
     }
-
+    // Get Own Appointments
+    @GetMapping("/appointment/{doctorId}")
+    public ResponseEntity<ApiResponseDto<List<AppointmentCreateResDto>>>  getOwnAppointment(
+            @PathVariable Long doctorId
+    ){
+        List<AppointmentCreateResDto> appointmentCreateResDtos = doctorService.getAppointmentsForDoctor(doctorId);
+        ApiResponseDto<List<AppointmentCreateResDto>> response = new ApiResponseDto<>(
+                true,
+                "Doctors Appointments..",
+                1,
+                appointmentCreateResDtos,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
+    }
+    @PutMapping("/appointment/{doctorId}/{appointmentId}/status")
+    public ResponseEntity<ApiResponseDto<AppointmentCreateResDto>> updateAppointmentStatus(
+            @PathVariable Long doctorId,
+            @PathVariable Long appointmentId,
+            @RequestBody AppointmentStatusUpdateReqDto dto
+    ){
+        AppointmentCreateResDto appointmentCreateResDto = doctorService.updateAppointmentStatus(
+                doctorId, appointmentId, dto.getStatus()
+        );
+        ApiResponseDto<AppointmentCreateResDto> response = new ApiResponseDto<>(
+                true,
+                "Status updated Successfull",
+                1,
+                appointmentCreateResDto,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
+    }
 }

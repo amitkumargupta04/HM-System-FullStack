@@ -4,6 +4,7 @@ import amit.hm.com.HM.System.dto.admin.CreateDocReqDto;
 import amit.hm.com.HM.System.dto.admin.CreateDocResDto;
 import amit.hm.com.HM.System.dto.common.ApiResponseDto;
 import amit.hm.com.HM.System.dto.doctor.DoctorOwnProfileResDto;
+import amit.hm.com.HM.System.dto.patient.AppointmentCreateResDto;
 import amit.hm.com.HM.System.dto.patient.PatientResponseDto;
 import amit.hm.com.HM.System.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -72,4 +73,18 @@ public class AdminController {
         );
         return ResponseEntity.ok(response);
     }
+    // get All Appointments
+    @GetMapping("/appointment/all")
+    public ResponseEntity<ApiResponseDto<List<AppointmentCreateResDto>>> getAllAppointments(){
+        List<AppointmentCreateResDto> appointmentCreateResDtos = adminService.getAllAppointments();
+        ApiResponseDto<List<AppointmentCreateResDto>> response = new ApiResponseDto<>(
+                true,
+                "All AppointMents Fetched..",
+                appointmentCreateResDtos.size(),
+                appointmentCreateResDtos,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
+    }
+
 }
